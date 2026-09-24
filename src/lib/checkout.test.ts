@@ -1,26 +1,30 @@
 import { describe, expect, it } from 'vitest'
 import { promoDiscount, validateCheckout } from './checkout'
 
-const valid = { nickname: 'Shaurmist', playerId: '12345678', email: 'me@example.com', consent: true }
+const valid = { nickname: 'Shaurmist_2b', contact: '@shaurmist', email: '', consent: true }
 
 describe('validateCheckout', () => {
-  it('пропускает корректную форму', () => {
+  it('пропускает корректную форму без почты', () => {
     expect(validateCheckout(valid)).toEqual({})
   })
 
   it('находит все ошибки пустой формы', () => {
-    expect(Object.keys(validateCheckout({ nickname: ' ', playerId: '', email: '', consent: false })).sort()).toEqual([
+    expect(Object.keys(validateCheckout({ nickname: ' ', contact: '', email: '', consent: false })).sort()).toEqual([
       'consent',
-      'email',
+      'contact',
       'nickname',
-      'playerId',
     ])
   })
 
-  it('проверяет формат ID и почты', () => {
-    const errors = validateCheckout({ ...valid, playerId: '12ab', email: 'me@mail' })
-    expect(errors.playerId).toBeDefined()
-    expect(errors.email).toBeDefined()
+  it('проверяет ник по правилам Minecraft', () => {
+    expect(validateCheckout({ ...valid, nickname: 'ab' }).nickname).toBeDefined()
+    expect(validateCheckout({ ...valid, nickname: 'ник_кириллицей' }).nickname).toBeDefined()
+    expect(validateCheckout({ ...valid, nickname: 'a_very_long_nickname' }).nickname).toBeDefined()
+  })
+
+  it('проверяет почту, только если она указана', () => {
+    expect(validateCheckout({ ...valid, email: 'me@mail' }).email).toBeDefined()
+    expect(validateCheckout({ ...valid, email: 'me@example.com' }).email).toBeUndefined()
   })
 })
 

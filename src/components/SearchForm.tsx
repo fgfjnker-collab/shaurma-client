@@ -21,7 +21,7 @@ export function SearchForm({ onSubmitted, autoFocus }: { onSubmitted?: () => voi
       <input
         className={styles.input}
         type="search"
-        placeholder="Кристаллы, VIP, наборы…"
+        placeholder="Тотемы, элитры, киты…"
         aria-label="Поиск по магазину"
         value={value}
         onChange={(e) => setValue(e.target.value)}

@@ -1,4 +1,4 @@
-import { ArrowRight, Headphones, ShieldCheck, Sparkles, Zap } from 'lucide-react'
+import { ArrowRight, Compass, Headphones, ShieldCheck, Sparkles } from 'lucide-react'
 import type { CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import { buttonClass } from '../components/button'
@@ -21,9 +21,9 @@ import styles from './HomePage.module.css'
 const popular = filterProducts(products, { sort: 'popular' }).slice(0, 8)
 // Товары для баннера и витрины в первом экране; если их убрать из каталога, подставятся популярные
 const pick = (id: string, fallback: Product) => productById.get(id) ?? fallback
-const deal = pick('starter-pack', popular[0])
+const deal = pick('starter-kit', popular[0])
 const dealDiscount = discountPercent(deal.price, deal.oldPrice)
-const showcase = ['starter-pack', 'crystals-1200', 'vip-30d'].map((id, i) => pick(id, popular[i]))
+const showcase = ['pvp-kit', 'totem-shulker', 'elytra'].map((id, i) => pick(id, popular[i]))
 const countByCategory = (id: string) => products.filter((p) => p.category === id).length
 
 export function HomePage() {
@@ -38,11 +38,11 @@ export function HomePage() {
               <Sparkles size={16} /> {site.tagline}
             </span>
             <h1 className={styles.title}>
-              Прокачай аккаунт в <span className={styles.accent}>{site.game}</span> за пару минут
+              Всё для выживания на <span className={styles.accent}>{site.game}</span>
             </h1>
             <p className={styles.lead}>
-              Кристаллы, ресурсы, бусты и VIP по честным ценам. Нужен только ник — пароль от аккаунта мы не
-              спрашиваем.
+              Киты, шалкеры и незеритовое снаряжение с доставкой прямо в игре. Нужен только ник — пароль от
+              аккаунта мы не спрашиваем.
             </p>
             <div className={styles.ctas}>
               <Link to="/catalog" className={buttonClass({ size: 'lg' })}>
@@ -54,10 +54,10 @@ export function HomePage() {
             </div>
             <ul className={styles.perks}>
               <li>
-                <Zap size={18} /> Выдача за пару минут
+                <Compass size={18} /> Доставка в игре
               </li>
               <li>
-                <ShieldCheck size={18} /> Без доступа к аккаунту
+                <ShieldCheck size={18} /> Пароль не нужен
               </li>
               <li>
                 <Headphones size={18} /> Поддержка каждый день
@@ -76,14 +76,12 @@ export function HomePage() {
             </div>
             <div className={`${styles.showcase} ${styles.showA}`}>
               <ProductArt art={first.art} />
-              <strong>{first.amount}</strong>
+              <strong>{first.title}</strong>
               <b>{formatPrice(first.price)}</b>
             </div>
             <div className={`${styles.showcase} ${styles.showB}`}>
               <ProductArt art={second.art} />
-              <strong>
-                {second.title} · {second.amount}
-              </strong>
+              <strong>{second.title}</strong>
               <b>{formatPrice(second.price)}</b>
             </div>
           </div>
@@ -118,7 +116,7 @@ export function HomePage() {
         <div className={styles.deal} style={{ '--deal-from': deal.art.from } as CSSProperties}>
           <div className={styles.dealText}>
             {dealDiscount > 0 && <DiscountBadge percent={dealDiscount} />}
-            <h2>{deal.title} — лучший старт</h2>
+            <h2>{deal.title} — выбраться со спавна</h2>
             <p>{deal.description}</p>
             <ul className={styles.dealIncludes}>
               {deal.includes.map((item) => (

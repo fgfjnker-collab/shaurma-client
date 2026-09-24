@@ -1,4 +1,4 @@
-import { Check, ChevronRight, Clock, Headphones, ShieldCheck, ShoppingCart } from 'lucide-react'
+import { Check, ChevronRight, Compass, Headphones, ShieldCheck, ShoppingCart } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { buttonClass } from '../components/button'
@@ -113,7 +113,7 @@ function ProductDetails({ product }: { product: Product }) {
 
             <ul className={styles.perks}>
               <li>
-                <Clock size={18} /> Выдача за пару минут
+                <Compass size={18} /> Доставка в игре
               </li>
               <li>
                 <ShieldCheck size={18} /> Пароль не нужен

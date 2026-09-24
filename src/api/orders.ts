@@ -5,12 +5,16 @@
  */
 export const IS_DEMO = true
 
-export type PaymentMethod = 'card' | 'sbp' | 'wallet'
+export type PaymentMethod = 'card' | 'sbp' | 'crypto'
+export type DeliveryMethod = 'meet' | 'stash'
 
 export interface OrderRequest {
+  /** Ник в Minecraft */
   nickname: string
-  playerId: string
-  email: string
+  /** Discord или Telegram для связи */
+  contact: string
+  email: string | null
+  delivery: DeliveryMethod
   payment: PaymentMethod
   promo: string | null
   items: { id: string; qty: number }[]

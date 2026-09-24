@@ -1,22 +1,21 @@
 import { CreditCard, MousePointerClick, PackageCheck } from 'lucide-react'
-import { site } from '../config/site'
 import styles from './Steps.module.css'
 
 const steps = [
   {
     icon: MousePointerClick,
     title: 'Выберите товар',
-    text: 'Валюта, ресурсы, бусты или готовый набор — добавьте нужное в корзину.',
+    text: 'Кит, шалкер или снаряжение — добавьте нужное в корзину.',
   },
   {
     icon: CreditCard,
-    title: 'Укажите аккаунт и оплатите',
-    text: `Нужны только ник и ID в ${site.game}. Оплата картой, через СБП или кошелёк.`,
+    title: 'Укажите ник и оплатите',
+    text: 'Нужны ник в Minecraft и Discord или Telegram для связи. Оплата картой, через СБП или криптой.',
   },
   {
     icon: PackageCheck,
     title: 'Получите в игре',
-    text: 'Ресурсы поступят на аккаунт автоматически, обычно за пару минут.',
+    text: 'Передадим заказ в игре: на спавне, на хайвее или у ваших координат.',
   },
 ]
 

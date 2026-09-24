@@ -1,7 +1,27 @@
-import { CircleCheck, CreditCard, Info, LoaderCircle, Lock, ShoppingBag, Smartphone, Wallet, X } from 'lucide-react'
+import {
+  Bitcoin,
+  CircleCheck,
+  CreditCard,
+  Handshake,
+  Info,
+  LoaderCircle,
+  Lock,
+  MapPin,
+  ShoppingBag,
+  Smartphone,
+  X,
+} from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
-import { IS_DEMO, checkPromo, createOrder, type Order, type PaymentMethod, type PromoResult } from '../api/orders'
+import {
+  IS_DEMO,
+  checkPromo,
+  createOrder,
+  type DeliveryMethod,
+  type Order,
+  type PaymentMethod,
+  type PromoResult,
+} from '../api/orders'
 import { buttonClass } from '../components/button'
 import { ProductArt } from '../components/ProductArt'
 import { site } from '../config/site'
@@ -11,15 +31,28 @@ import { formatPrice } from '../lib/format'
 import { useDocumentTitle } from '../lib/useDocumentTitle'
 import styles from './CheckoutPage.module.css'
 
-const paymentMethods: { id: PaymentMethod; title: string; text: string; icon: typeof CreditCard }[] = [
+interface Option<T> {
+  id: T
+  title: string
+  text: string
+  icon: typeof CreditCard
+}
+
+const deliveryMethods: Option<DeliveryMethod>[] = [
+  { id: 'meet', title: 'Встреча в игре', text: 'На спавне или на хайвее — договоримся о месте', icon: Handshake },
+  { id: 'stash', title: 'Тайник по координатам', text: 'Спрячем заказ у вашей базы, координаты пришлём лично', icon: MapPin },
+]
+
+const paymentMethods: Option<PaymentMethod>[] = [
   { id: 'card', title: 'Банковская карта', text: 'Visa, Mastercard, МИР', icon: CreditCard },
   { id: 'sbp', title: 'СБП', text: 'По QR-коду через приложение банка', icon: Smartphone },
-  { id: 'wallet', title: 'Кошелёк', text: 'Электронные кошельки', icon: Wallet },
+  { id: 'crypto', title: 'Криптовалюта', text: 'USDT, TON, BTC', icon: Bitcoin },
 ]
 
 interface Placed extends Order {
   nickname: string
-  email: string
+  contact: string
+  email: string | null
 }
 
 export function CheckoutPage() {
@@ -35,7 +68,8 @@ export function CheckoutPage() {
 
 function Checkout({ onPlaced }: { onPlaced: (order: Placed) => void }) {
   const cart = useCart()
-  const [form, setForm] = useState<CheckoutForm>({ nickname: '', playerId: '', email: '', consent: false })
+  const [form, setForm] = useState<CheckoutForm>({ nickname: '', contact: '', email: '', consent: false })
+  const [delivery, setDelivery] = useState<DeliveryMethod>('meet')
   const [payment, setPayment] = useState<PaymentMethod>('card')
   const [errors, setErrors] = useState<CheckoutErrors>({})
   const [touched, setTouched] = useState(false)
@@ -78,12 +112,16 @@ function Checkout({ onPlaced }: { onPlaced: (order: Placed) => void }) {
 
     setSubmitting(true)
     setSubmitError('')
+    const recipient = {
+      nickname: form.nickname.trim(),
+      contact: form.contact.trim(),
+      email: form.email.trim() || null,
+    }
     try {
       const order = await createOrder(
         {
-          nickname: form.nickname.trim(),
-          playerId: form.playerId.trim(),
-          email: form.email.trim(),
+          ...recipient,
+          delivery,
           payment,
           promo: promo?.code ?? null,
           items: cart.lines.map((l) => ({ id: l.product.id, qty: l.qty })),
@@ -91,7 +129,7 @@ function Checkout({ onPlaced }: { onPlaced: (order: Placed) => void }) {
         total,
       )
       cart.clear()
-      onPlaced({ ...order, nickname: form.nickname.trim(), email: form.email.trim() })
+      onPlaced({ ...order, ...recipient })
     } catch {
       setSubmitError('Не удалось оформить заказ. Проверьте соединение и попробуйте ещё раз.')
     } finally {
@@ -142,37 +180,59 @@ function Checkout({ onPlaced }: { onPlaced: (order: Placed) => void }) {
       <div className={styles.layout}>
         <form id="checkout-form" className={styles.form} onSubmit={submit} noValidate>
           <fieldset className={styles.card}>
-            <legend>Аккаунт в {site.game}</legend>
+            <legend>Получатель</legend>
             <div className={styles.fields}>
               <div className={styles.field}>
-                <label htmlFor="checkout-nickname">Игровой ник</label>
+                <label htmlFor="checkout-nickname">Ник в Minecraft</label>
                 <input
                   {...fieldProps('nickname')}
                   className={styles.input}
                   autoComplete="nickname"
+                  autoCapitalize="off"
+                  spellCheck={false}
                   placeholder="Например, Shaurmist"
                   value={form.nickname}
                   onChange={(e) => set('nickname', e.target.value)}
                 />
                 {fieldError('nickname') || (
                   <span id="checkout-nickname-hint" className={styles.hint}>
-                    Как в профиле игры
+                    Точно как в игре, на {site.game}
                   </span>
                 )}
               </div>
               <div className={styles.field}>
-                <label htmlFor="checkout-playerId">ID аккаунта</label>
+                <label htmlFor="checkout-contact">Discord или Telegram</label>
                 <input
-                  {...fieldProps('playerId')}
+                  {...fieldProps('contact')}
                   className={styles.input}
-                  inputMode="numeric"
-                  placeholder="12345678"
-                  value={form.playerId}
-                  onChange={(e) => set('playerId', e.target.value.replace(/\D/g, ''))}
+                  autoCapitalize="off"
+                  spellCheck={false}
+                  placeholder="@username"
+                  value={form.contact}
+                  onChange={(e) => set('contact', e.target.value)}
                 />
-                {fieldError('playerId') || (
-                  <span id="checkout-playerId-hint" className={styles.hint}>
-                    Профиль → Настройки → ID
+                {fieldError('contact') || (
+                  <span id="checkout-contact-hint" className={styles.hint}>
+                    Напишем, чтобы договориться о передаче
+                  </span>
+                )}
+              </div>
+              <div className={`${styles.field} ${styles.wide}`}>
+                <label htmlFor="checkout-email">
+                  Почта для чека <span className={styles.optional}>— необязательно</span>
+                </label>
+                <input
+                  {...fieldProps('email')}
+                  className={styles.input}
+                  type="email"
+                  autoComplete="email"
+                  placeholder="you@example.com"
+                  value={form.email}
+                  onChange={(e) => set('email', e.target.value)}
+                />
+                {fieldError('email') || (
+                  <span id="checkout-email-hint" className={styles.hint}>
+                    Пришлём чек и номер заказа
                   </span>
                 )}
               </div>
@@ -180,23 +240,22 @@ function Checkout({ onPlaced }: { onPlaced: (order: Placed) => void }) {
           </fieldset>
 
           <fieldset className={styles.card}>
-            <legend>Контакты</legend>
-            <div className={styles.field}>
-              <label htmlFor="checkout-email">Электронная почта</label>
-              <input
-                {...fieldProps('email')}
-                className={styles.input}
-                type="email"
-                autoComplete="email"
-                placeholder="you@example.com"
-                value={form.email}
-                onChange={(e) => set('email', e.target.value)}
-              />
-              {fieldError('email') || (
-                <span id="checkout-email-hint" className={styles.hint}>
-                  Пришлём чек и статус заказа
-                </span>
-              )}
+            <legend>Способ получения</legend>
+            <div className={`${styles.methods} ${styles.twoColumns}`}>
+              {deliveryMethods.map(({ id, title, text, icon: MethodIcon }) => (
+                <label key={id} className={styles.method}>
+                  <input
+                    type="radio"
+                    name="delivery"
+                    value={id}
+                    checked={delivery === id}
+                    onChange={() => setDelivery(id)}
+                  />
+                  <MethodIcon size={22} />
+                  <strong>{title}</strong>
+                  <span>{text}</span>
+                </label>
+              ))}
             </div>
           </fieldset>
 
@@ -229,7 +288,7 @@ function Checkout({ onPlaced }: { onPlaced: (order: Placed) => void }) {
                 onChange={(e) => set('consent', e.target.checked)}
               />
               <span id="checkout-consent-hint">
-                Я проверил ник и ID и согласен с <Link to="/help">условиями покупки</Link>
+                Я проверил ник и согласен с <Link to="/help">условиями покупки</Link>
               </span>
             </label>
             {fieldError('consent')}
@@ -364,8 +423,8 @@ function Success({ order }: { order: Placed }) {
       <h2>Заказ оформлен!</h2>
       <span className={styles.orderNumber}>{order.number}</span>
       <p>
-        Ресурсы поступят на аккаунт <strong>{order.nickname}</strong> в течение нескольких минут. Чек и статус заказа
-        придут на {order.email}.
+        Скоро напишем вам в <strong>{order.contact}</strong>, чтобы договориться о передаче заказа игроку{' '}
+        <strong>{order.nickname}</strong>.{order.email && ` Чек придёт на ${order.email}.`}
       </p>
       <div className={styles.actions}>
         <Link to="/catalog" className={buttonClass({ size: 'lg' })}>

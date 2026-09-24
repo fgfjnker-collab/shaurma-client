@@ -1,27 +1,28 @@
 export interface CheckoutForm {
   nickname: string
-  playerId: string
+  contact: string
   email: string
   consent: boolean
 }
 
 export type CheckoutErrors = Partial<Record<keyof CheckoutForm, string>>
 
+const NICKNAME_RE = /^[A-Za-z0-9_]{3,16}$/
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export function validateCheckout(form: CheckoutForm): CheckoutErrors {
   const errors: CheckoutErrors = {}
   const nickname = form.nickname.trim()
-  if (!nickname) errors.nickname = 'Укажите игровой ник'
-  else if (nickname.length < 3 || nickname.length > 24) errors.nickname = 'Ник — от 3 до 24 символов'
+  if (!nickname) errors.nickname = 'Укажите ник в Minecraft'
+  else if (!NICKNAME_RE.test(nickname)) errors.nickname = 'Ник — 3–16 символов: латиница, цифры и _'
 
-  const playerId = form.playerId.trim()
-  if (!playerId) errors.playerId = 'Укажите ID аккаунта'
-  else if (!/^\d{6,12}$/.test(playerId)) errors.playerId = 'ID состоит из 6–12 цифр'
+  const contact = form.contact.trim()
+  if (!contact) errors.contact = 'Укажите Discord или Telegram'
+  else if (contact.length < 2 || contact.length > 64) errors.contact = 'Проверьте контакт'
 
+  // почта необязательна, но если указана — должна быть корректной
   const email = form.email.trim()
-  if (!email) errors.email = 'Укажите почту для чека'
-  else if (!EMAIL_RE.test(email)) errors.email = 'Проверьте адрес почты'
+  if (email && !EMAIL_RE.test(email)) errors.email = 'Проверьте адрес почты'
 
   if (!form.consent) errors.consent = 'Нужно согласие с условиями'
   return errors

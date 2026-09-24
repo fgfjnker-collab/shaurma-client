@@ -52,7 +52,7 @@ export function CatalogPage() {
           <input
             className={styles.control}
             type="search"
-            placeholder="Поиск: кристаллы, руда, VIP…"
+            placeholder="Поиск: тотемы, незерит, элитры…"
             value={q}
             onChange={(e) => update('q', e.target.value)}
           />

@@ -127,6 +127,11 @@
   font-size: 13px;
 }
 
+.optional {
+  color: var(--text-subtle);
+  font-weight: 400;
+}
+
 .error {
   color: var(--danger);
   font-size: 13px;
@@ -141,6 +146,14 @@
 @media (min-width: 640px) {
   .methods {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .methods.twoColumns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wide {
+    grid-column: 1 / -1;
   }
 }
 

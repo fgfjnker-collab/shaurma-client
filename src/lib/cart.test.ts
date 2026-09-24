@@ -5,7 +5,7 @@ import { MAX_QTY, cartReducer, sanitizeCart, summarizeCart } from './cart'
 const product = (id: string, price: number, oldPrice?: number): Product => ({
   id,
   title: id,
-  category: 'currency',
+  category: 'kits',
   amount: '1',
   short: '',
   description: '',
@@ -13,7 +13,7 @@ const product = (id: string, price: number, oldPrice?: number): Product => ({
   price,
   oldPrice,
   popularity: 0,
-  art: { icon: 'gem', from: '#000', to: '#fff' },
+  art: { icon: 'box', from: '#000', to: '#fff' },
 })
 
 describe('cartReducer', () => {

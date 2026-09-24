@@ -10,8 +10,8 @@ import { ThemeSwitcher } from './ThemeSwitcher'
 
 const links = [
   { to: '/catalog', label: 'Каталог' },
-  { to: '/catalog?category=bundles', label: 'Наборы' },
-  { to: '/catalog?category=premium', label: 'Премиум' },
+  { to: '/catalog?category=kits', label: 'Киты' },
+  { to: '/catalog?category=shulkers', label: 'Шалкеры' },
   { to: '/help', label: 'Помощь' },
 ]
 

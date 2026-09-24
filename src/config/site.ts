@@ -1,8 +1,8 @@
 /** Основные настройки витрины. Меняйте здесь — всё остальное подтянется само. */
 export const site = {
   name: 'Shaurma',
-  game: 'Тубитути',
-  tagline: 'Магазин ресурсов для Тубитути',
+  game: '2b2t',
+  tagline: 'Магазин ресурсов для 2b2t',
   support: {
     telegram: 'https://t.me/',
     telegramHandle: '@shaurma_support',

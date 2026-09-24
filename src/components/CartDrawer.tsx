@@ -44,7 +44,7 @@ export function CartDrawer() {
             <ShoppingBag size={32} />
           </div>
           <h3>Корзина пуста</h3>
-          <p>Загляните в каталог — там валюта, ресурсы и выгодные наборы.</p>
+          <p>Загляните в каталог — там киты, шалкеры и снаряжение.</p>
           <Link to="/catalog" className={buttonClass()} onClick={cart.close}>
             Перейти в каталог
           </Link>

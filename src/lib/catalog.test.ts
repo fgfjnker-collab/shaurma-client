@@ -4,15 +4,14 @@ import { filterProducts } from './catalog'
 
 describe('filterProducts', () => {
   it('фильтрует по категории', () => {
-    const result = filterProducts(products, { category: 'boosters' })
+    const result = filterProducts(products, { category: 'shulkers' })
     expect(result.length).toBeGreaterThan(0)
-    expect(result.every((p) => p.category === 'boosters')).toBe(true)
+    expect(result.every((p) => p.category === 'shulkers')).toBe(true)
   })
 
   it('ищет по нескольким словам без учёта регистра и буквы ё', () => {
-    const result = filterProducts(products, { q: 'КРИСТАЛЛ 1 200' })
-    expect(result.map((p) => p.id)).toEqual(['crystals-1200'])
-    expect(filterProducts(products, { q: 'древесин' }).length).toBeGreaterThan(1)
+    expect(filterProducts(products, { q: 'ЭЛИТРЫ прочность' }).map((p) => p.id)).toEqual(['elytra'])
+    expect(filterProducts(products, { q: 'тотём' }).map((p) => p.id)).toContain('totem-shulker')
   })
 
   it('сортирует по цене', () => {

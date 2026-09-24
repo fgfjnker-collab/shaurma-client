@@ -11,14 +11,14 @@ export function Footer() {
         <div className={styles.about}>
           <Logo />
           <p>
-            {site.tagline}. Валюта, ресурсы, наборы и премиум — с быстрой выдачей и без передачи пароля от аккаунта.
+            {site.tagline}. Киты, шалкеры и снаряжение с доставкой в игре — без передачи пароля от аккаунта.
           </p>
         </div>
 
         <div className={styles.col}>
           <h3>Магазин</h3>
           <ul>
-            {categories.slice(0, 4).map((c) => (
+            {categories.map((c) => (
               <li key={c.id}>
                 <Link to={`/catalog?category=${c.id}`}>{c.title}</Link>
               </li>
@@ -61,7 +61,10 @@ export function Footer() {
         <span>
           © {new Date().getFullYear()} {site.name}
         </span>
-        <span>Не является официальным магазином {site.game}. Все товарные знаки принадлежат их владельцам.</span>
+        <span>
+          Не является официальным магазином {site.game} и не связан с Mojang. Все товарные знаки принадлежат их
+          владельцам.
+        </span>
       </div>
     </footer>
   )
