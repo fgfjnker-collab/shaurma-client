@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ru" data-theme="dark" data-accent="violet">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Shaurma — магазин ресурсов для Тубитути: валюта, наборы, бусты и премиум с мгновенной выдачей." />
+    <meta name="theme-color" content="#09090d" />
+    <title>Shaurma — ресурсы для Тубитути</title>
+    <script>
+      // Применяем сохранённую тему до первой отрисовки, чтобы не было вспышки.
+      try {
+        var saved = JSON.parse(localStorage.getItem('shaurma:theme') || 'null')
+        if (saved && saved.mode) document.documentElement.dataset.theme = saved.mode
+        if (saved && saved.accent) document.documentElement.dataset.accent = saved.accent
+      } catch (e) {}
+    </script>
+    <script type="module" crossorigin src="./assets/index-CqxuCx9X.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Ch2k5aBf.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
