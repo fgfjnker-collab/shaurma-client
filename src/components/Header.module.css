@@ -1,0 +1,146 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  border-bottom: 1px solid var(--border);
+  background: var(--header-bg);
+  backdrop-filter: saturate(160%) blur(16px);
+  -webkit-backdrop-filter: saturate(160%) blur(16px);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: var(--header-h);
+}
+
+.nav {
+  display: none;
+  gap: 2px;
+  margin-left: 20px;
+}
+
+.navLink {
+  padding: 8px 12px;
+  border-radius: 10px;
+  color: var(--text-muted);
+  font-size: 15px;
+  font-weight: 550;
+  transition: color 0.15s var(--ease), background-color 0.15s var(--ease);
+}
+
+.navLink:hover {
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.navLink.active {
+  color: var(--text);
+}
+
+.search {
+  display: none;
+  flex: 1;
+  max-width: 360px;
+  margin-left: auto;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+
+.cartButton {
+  position: relative;
+}
+
+.count {
+  position: absolute;
+  top: 4px;
+  right: 2px;
+  display: grid;
+  place-items: center;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  border: 2px solid var(--bg);
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.bump {
+  animation: bump 0.45s var(--ease);
+}
+
+@keyframes bump {
+  30% {
+    transform: scale(1.35);
+  }
+}
+
+.burger {
+  margin-left: -8px;
+}
+
+.mobileMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px var(--gutter) 20px;
+  border-top: 1px solid var(--border);
+  animation: slide 0.2s var(--ease);
+}
+
+@keyframes slide {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.mobileMenu form {
+  margin: 8px 0;
+}
+
+.mobileLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--border);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.mobileLink:last-child {
+  border-bottom: 0;
+}
+
+.mobileLink svg {
+  color: var(--text-subtle);
+}
+
+@media (min-width: 960px) {
+  .nav,
+  .search {
+    display: flex;
+  }
+
+  .search + .actions {
+    margin-left: 8px;
+  }
+
+  .burger,
+  .mobileMenu {
+    display: none;
+  }
+}

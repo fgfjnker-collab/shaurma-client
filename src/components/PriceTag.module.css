@@ -1,0 +1,28 @@
+.price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+}
+
+.current {
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.old {
+  color: var(--text-subtle);
+  text-decoration: line-through;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.lg .current {
+  font-size: 34px;
+}
+
+.lg .old {
+  font-size: 18px;
+}

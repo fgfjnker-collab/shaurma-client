@@ -1,0 +1,94 @@
+/* Цветовые токены. Тёмная тема — основная, светлая включается через data-theme="light". */
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #09090d;
+  --bg-glow: rgb(255 255 255 / 0.02);
+  --surface: #111117;
+  --surface-2: #17171f;
+  --surface-3: #20202b;
+  --border: rgb(255 255 255 / 0.07);
+  --border-strong: rgb(255 255 255 / 0.14);
+  --text: #f3f3f7;
+  --text-muted: #a3a3b8;
+  --text-subtle: #6e6e84;
+  --overlay: rgb(4 4 8 / 0.7);
+  --header-bg: rgb(9 9 13 / 0.72);
+  --shadow-lg: 0 24px 60px -20px rgb(0 0 0 / 0.7);
+  --shadow-md: 0 12px 32px -12px rgb(0 0 0 / 0.6);
+  --success: #34d399;
+  --danger: #fb7185;
+  --accent-text: color-mix(in oklab, var(--accent) 72%, white);
+  --accent-soft: color-mix(in oklab, var(--accent) 16%, transparent);
+  --accent-glow: color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f5f5f8;
+  --bg-glow: rgb(0 0 0 / 0.015);
+  --surface: #ffffff;
+  --surface-2: #f3f3f7;
+  --surface-3: #e9e9f0;
+  --border: rgb(15 15 30 / 0.08);
+  --border-strong: rgb(15 15 30 / 0.16);
+  --text: #121218;
+  --text-muted: #55556a;
+  --text-subtle: #8a8aa0;
+  --overlay: rgb(20 20 30 / 0.4);
+  --header-bg: rgb(245 245 248 / 0.78);
+  --shadow-lg: 0 24px 60px -24px rgb(20 20 50 / 0.25);
+  --shadow-md: 0 12px 32px -16px rgb(20 20 50 / 0.2);
+  --success: #059669;
+  --danger: #e11d48;
+  --accent-text: color-mix(in oklab, var(--accent) 80%, black);
+  --accent-soft: color-mix(in oklab, var(--accent) 12%, transparent);
+  --accent-glow: color-mix(in oklab, var(--accent) 22%, transparent);
+}
+
+/* Акцентные цвета. --on-accent — цвет текста на кнопке с акцентным фоном. */
+:root,
+:root[data-accent='violet'] {
+  --accent: #8b5cf6;
+  --accent-hover: #9d74f8;
+  --on-accent: #ffffff;
+}
+:root[data-accent='sky'] {
+  --accent: #0ea5e9;
+  --accent-hover: #38b6ee;
+  --on-accent: #ffffff;
+}
+:root[data-accent='emerald'] {
+  --accent: #10b981;
+  --accent-hover: #2cc996;
+  --on-accent: #04130d;
+}
+:root[data-accent='amber'] {
+  --accent: #f59e0b;
+  --accent-hover: #f7b03a;
+  --on-accent: #1a1204;
+}
+:root[data-accent='rose'] {
+  --accent: #f43f5e;
+  --accent-hover: #f65f79;
+  --on-accent: #ffffff;
+}
+
+:root {
+  --font-sans: 'Onest Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Unbounded Variable', var(--font-sans);
+  --radius-sm: 10px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --container: 1200px;
+  --gutter: 16px;
+  --header-h: 68px;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 24px;
+  }
+}

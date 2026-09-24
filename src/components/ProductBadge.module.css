@@ -1,0 +1,29 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+  padding: 0 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
+}
+
+.hit {
+  background: rgb(10 10 14 / 0.62);
+  color: #fde68a;
+}
+
+.new {
+  background: rgb(10 10 14 / 0.62);
+  color: #a7f3d0;
+}
+
+.sale,
+.discount {
+  background: #f43f5e;
+  color: #fff;
+}
