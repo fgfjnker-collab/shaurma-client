@@ -5,6 +5,8 @@
 
 Стек: React 19, TypeScript, Vite, React Router, CSS Modules, Vitest, Oxlint.
 
+Сайт: https://fgfjnker-collab.github.io/shaurma-client/
+
 ## Запуск
 
 Нужен Node.js 20.19+ или 22+.
@@ -26,6 +28,11 @@ npm run dev        # http://localhost:5173
 
 При обычной сборке сервер должен отдавать `index.html` на все пути (на Vercel и Netlify это делается правилом rewrite).
 Если такой настройки нет — используйте `build:static`.
+
+## Публикация
+
+Сайт раздаётся GitHub Pages из ветки `gh-pages`: в ней лежит только содержимое `dist/` после `npm run build:static`
+(плюс пустой `.nojekyll`). Чтобы обновить сайт, пересоберите его и замените содержимое этой ветки.
 
 ## Страницы
 
